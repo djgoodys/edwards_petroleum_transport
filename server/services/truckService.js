@@ -3,13 +3,12 @@ const expressAsyncHandler = require("express-async-handler");
 
 const createTruck = expressAsyncHandler(async (req, res) => {
   try {
-    const { name, description, image } = req.body;
-    const result = await truckRepository.createTruck(name, description, image);
-
+    const result = await truckRepository.createTruck(req.body);
     if (result) {
-      res.status(201).json({
-        message: "Truck created successfully",
-      });
+      res.status(200).json({
+        data:result,
+        message: "Successfully created new truck.",
+      })
     } else {
       res.status(400);
       throw new Error(`Truck creation failed`);
@@ -31,6 +30,7 @@ const editTruck = expressAsyncHandler(async (req, res) => {
     if (result) {
       res.status(200).json({
         message: "Truck is successfully edited",
+        data:result
       });
     } else {
       res.status(400);
@@ -52,6 +52,7 @@ const deleteTruck = expressAsyncHandler(async (req, res) => {
 
     if (result) {
       res.status(200).json({
+        data:result,
         message: "Truck is successfully deleted",
       });
     } else {
@@ -97,12 +98,12 @@ const getAllTrucks = expressAsyncHandler(async (req, res) => {
     const result = await truckRepository.getAllTrucks();
     res.status(200).json({
       data: result,
-      message: "Successfully fetched all categories.",
+      message: "Successfully fetched all trucks.",
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Error fetching categories",
+      message: "Error fetching trucks",
       error: err.message,
     });
   }

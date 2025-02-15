@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define the schema for the user
 const userSchema = new Schema({
   fullname: {
     type: String,
@@ -20,21 +19,29 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  admin: {
-    type: String,
+  isAdmin: {
+    type: Boolean,
     required: true
   },
   isActive: {
     type:Boolean,
     default:true
   },
-  createdAt: {
+  createdTs: {
     type: Date,
     default: Date.now
+  },
+  updatedTs: {
+    type:Date,
+    required: true
   }
 });
 
-// Create the model from the schema
+userSchema.pre('save', function (next) {
+  this.updatedTs = Date.now();
+  next();
+});
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

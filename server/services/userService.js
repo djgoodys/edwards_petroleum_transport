@@ -70,6 +70,7 @@ const login = expressAsyncHandler(async (req, res) => {
       userSessionObject = await userRepository.createUserSession({
         userId: user._id,
         sessionToken: sessionToken,
+        isAdmin:user.isAdmin
       });
     }
     console.log(username + " logged on successfully")
@@ -92,6 +93,7 @@ const login = expressAsyncHandler(async (req, res) => {
     });
   }
 });
+
 
 
 const userDetails = expressAsyncHandler(async (req, res) => {
@@ -120,19 +122,16 @@ const userDetails = expressAsyncHandler(async (req, res) => {
 
 const logout = expressAsyncHandler(async (req, res) => {
   try {
-    const userSessionObject = await userRepository.findActiveUserSession(
-      req.user._id,
-      req.headers.authorization.split(" ")[1]
-    );
-
+    const userSessionObject = await userRepository.findActiveUserSession(req.body.userId);
+    
     if (userSessionObject) {
       await userRepository.deactivateUserSession(userSessionObject);
       res.status(200).json({
-        message: "User is successfully logged out.",
+        logout: "true",
       });
     } else {
       res.status(400);
-      throw new Error("Unable to logout the user");
+      throw new Error("Unable to logout the user, no userSession found");
     }
   } catch (err) {
     console.error(err);

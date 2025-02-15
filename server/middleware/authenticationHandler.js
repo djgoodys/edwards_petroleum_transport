@@ -12,11 +12,12 @@ const auth = asyncHandler(async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-      console.log(token)
+      console.log("FROM AUTH: TOKEN:"+ token)
 
       const userSessionObject = await UserSessionModel.findOne({
         sessionToken: token,
         isActive: true,
+        isAdmin: true
       });
 
       console.log(userSessionObject);
@@ -32,7 +33,7 @@ const auth = asyncHandler(async (req, res, next) => {
       req.user = await UserModel.findById(decodedSessionToken.userId);
       next();
     } catch (err) {
-      console.log("Inside catch block in middleware of authentication");
+      console.log("error Inside catch block in middleware of authentication "+ err.message);
       res.status(401).json({
         message: "Not authorized",
       });
@@ -46,7 +47,8 @@ const auth = asyncHandler(async (req, res, next) => {
 });
 
 const isAdmin = asyncHandler(async (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.body.isAdmin) {
+    console.log("from Auth isAdmin: req.isAdmin="+ req.body.isAdmin)
     next();
   } else {
     res.status(401).json({

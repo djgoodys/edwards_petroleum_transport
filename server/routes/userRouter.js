@@ -14,9 +14,11 @@ const {
     deleteUser,
     getUser,
     getAllUsers,
-    login
+    login,
+    logout
 } = require("../services/userService");
 userRouter.post('/login', login); 
+userRouter.post('/logout', logout);
 userRouter.route("/").post(auth, isAdmin, createUser);
 userRouter.route("/:id").put(auth, isAdmin, editUser);
 userRouter.route("/:id").delete(auth, isAdmin, deleteUser);

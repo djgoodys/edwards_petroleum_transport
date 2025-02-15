@@ -14,6 +14,10 @@ const userSessionSchema = mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    isAdmin:{
+        type: Boolean,
+        default:false
+    },
     createdTs: {
         type: Date,
         default: new Date(),

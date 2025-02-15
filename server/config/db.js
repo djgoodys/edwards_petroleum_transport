@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/userModel');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-//const dbURI = "mongodb+srv://edwards:PHax9g5nhQOoqMBg@cluster0.mz4nm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const dbURI = "mongodb+srv://edwards:PHax9g5nhQOoqMBg@cluster0.mz4nm.mongodb.net/edwards?retryWrites=true&w=majority&appName=Cluster0";
 
 const client = new MongoClient(dbURI, {

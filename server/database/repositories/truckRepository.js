@@ -1,13 +1,11 @@
 const TruckModel = require("../../models/truckModel");
 
-const createTruck = async (name, description, image) => {
+const createTruck = async (truckData) => {
   try {
-    const newTruck = await TruckModel.create({
-      name: name,
-      description: description,
-      image: image
-    });
-    return newTruck;
+    const newTruck = new TruckModel(truckData);
+    const result = await newTruck.save();
+    const trucks = await TruckModel.find({});
+    return trucks;
   } catch (err) {
     throw new Error(`Error while creating truck: ${err.message}`);
   }
@@ -16,20 +14,24 @@ const createTruck = async (name, description, image) => {
 const editTruck = async (truckId, newData) => {
   try {
     const truckObject = await TruckModel.findOne({
-      _id: truckId,
-      isActive: true,
+      _id: truckId
     });
 
     if (!truckObject) {
       return null;
     }
-
-    truckObject.name = newData.name;
-    truckObject.description = newData.description;
-    truckObject.image = newData.image;
+    truckObject.area_served = newData.area_served
+    truckObject.location = newData.location
+    truckObject.assigned_to = newData.assigned_to
+    truckObject.color = newData.color
+    truckObject.capacity = parseFloat(newData.capacity)
+    truckObject.milage = newData.milage
+    truckObject.year = newData.year
+    truckObject.lic_plate = newData.lic_plate
 
     const updatedTruck = await truckObject.save();
-    return updatedTruck;
+    const AllTrucks = await TruckModel.find({})
+    return AllTrucks;
   } catch (err) {
     throw new Error(`Error while editing truck: ${err.message}`);
   }
@@ -37,15 +39,10 @@ const editTruck = async (truckId, newData) => {
 
 const deleteTruck = async (truckId) => {
   try {
-    const truckObject = await TruckModel.findById(truckId);
 
-    if (!truckObject) {
-      return null;
-    }
-
-    truckObject.isActive = false;
-    const updatedTruck = await truckObject.save();
-    return updatedTruck;
+    const deletedTruck = await TruckModel.findByIdAndDelete(truckId)
+    const allTrucks = await TruckModel.find({})
+    return allTrucks;
   } catch (err) {
     throw new Error(`Error while deleting truck: ${err.message}`);
   }

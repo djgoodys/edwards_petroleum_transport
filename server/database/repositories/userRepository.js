@@ -49,13 +49,18 @@ const findActiveUsers = async () => {
   }
 };
 
-const findActiveUserSession = async (userId, sessionToken) => {
+const findActiveUserSession = async (userId) => {
   try {
-    return await UserSessionModel.findOne({
+    const uSession = await UserSessionModel.findOne({
       userId: userId,
-      isActive: true,
-      sessionToken: sessionToken,
+      isActive: true
     });
+    if(!uSession){
+      console.log("NO SESSION")
+    }else{
+      console.log("uSESSION="+uSession.userId)
+    }
+    return uSession
   } catch (err) {
     throw new Error(`Error while finding active user session: ${err.message}`);
   }

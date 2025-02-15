@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define the schema for the truck
 const truck_infoSchema = new Schema({
     lic_plate: {
         type: String,
