@@ -23,12 +23,20 @@ const editTruck = async (truckId, newData) => {
     truckObject.area_served = newData.area_served
     truckObject.location = newData.location
     truckObject.assigned_to = newData.assigned_to
-    truckObject.color = newData.color
     truckObject.capacity = parseFloat(newData.capacity)
     truckObject.milage = newData.milage
     truckObject.year = newData.year
     truckObject.lic_plate = newData.lic_plate
-
+    truckObject.unit = newData.unit
+    truckObject.unladen_weight = newData.unladen_weight
+    truckObject.gross_weight = newData.gross_weight
+    truckObject.axles = newData.axles
+    truckObject.make = newData.make
+    truckObject.type = newData.type
+    truckObject.fuel = newData.fuel
+    truckObject.vin = newData.vin
+    truckObject.reg_expires = newData.reg_expires
+    truckObject.unit = newData.unit
     const updatedTruck = await truckObject.save();
     const AllTrucks = await TruckModel.find({})
     return AllTrucks;

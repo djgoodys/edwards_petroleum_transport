@@ -7,20 +7,17 @@ const truck_infoSchema = new Schema({
         required: true,
         unique: true
     },
-    truck_make: {
+    make: {
         type: String
     },
     year: {
-        type: Number,
+        type: String,
         required: true,
     },
     milage: {
         type: Number,
         required: true,
-    },
-    color: {
-        type: String,
-        required: true,
+        default: 0,
     },
     location: {
         type: String,
@@ -30,9 +27,37 @@ const truck_infoSchema = new Schema({
     }, 
     capacity:{
         type: Number,
+        default:0,
     },
     assigned_to: {
         type:String,
+    },
+    unit: {
+        type:String
+    },
+    unladen_weight: {
+        type:String
+    },
+    gross_weight: {
+        type:String
+    },
+    axles: {
+        type:String
+    },
+    make: {
+        type:String
+    },
+    type: {
+        type:String
+    },
+    fuel: {
+        type:String
+    },
+    vin: {
+        type:String
+    },
+    reg_expires: {
+        type:Date
     },
      image: {
         type:String,
